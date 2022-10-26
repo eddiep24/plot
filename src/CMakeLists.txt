@@ -7,7 +7,7 @@ add_definitions(-std=c++17)
 # set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 # set(CMAKE_BUILD_TYPE Debug)
 
-add_executable(${PROJECT_NAME} math_utils.cpp shader_utils.cpp main.cpp)
+add_executable(${PROJECT_NAME} math_utils.cpp shader_utils.cpp utils.cpp main.cpp)
 
 find_package(glfw3 3.4 REQUIRED)
 find_package(OpenGL REQUIRED)

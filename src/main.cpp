@@ -23,23 +23,14 @@
 #include "logs.h"
 #include "shader_utils.h"
 #include "math_utils.h"
-
+#include "utils.h"
 
 
 const size_t WIDTH = 500;
 const size_t HEIGHT = 500;
 const char *WINDOW_NAME = "Fick's Law";
-auto shader_utils = ShaderUtils::Program{};
 
 
-/**
- * @brief Load the shaders, in order to display the result
- *
- * @param erase_if_program_registered Allow to erase the shader if it exists
- * @return true The shader has been successfully registered
- * @return false The shader has not been registered, due to an error
- */
-const bool loadShaderProgram(const bool erase_if_program_registered);
 
 /*
  * Callback to handle the "reload" event, once the user pressed the 'r' key.
@@ -53,12 +44,7 @@ static void reloadShaders(GLFWwindow *window, int key, int scancode, int action,
     }
 }
 
-/*
- * Initializes the window and viewport via GLFW.
- * The viewport takes the all window.
- * If an error happens, the function returns `NULL` but **does not** free / terminate the GLFW library.
- * Then, do not forget to call `glfwTerminate` if this function returns `NULL`.
- */
+
 GLFWwindow *initializeWindow()
 {
     // Minimum target is OpenGL 4.1
@@ -82,51 +68,8 @@ GLFWwindow *initializeWindow()
     return window;
 }
 
-/**
- * @brief Returns the all file, as a string, which the file path has been passed
- * as parameter
- *
- * @param path The path of the file
- * @return The content of the file, as a string (read all file)
- */
-inline std::string readFile(const char* filePath) 
-{
-	std::string content;
-	std::ifstream fileStream(filePath, std::ios::in);
-	std::string line = "";
-	while(!fileStream.eof())
-	{
-		getline(fileStream, line);
-		content.append(line + "\n");
-	}
-	fileStream.close();
-	return content;
-}
 
-const bool loadShaderProgram(const bool erase_if_program_registered = true)
-{
-    const std::string basicVertexShaderSource = readFile("../Shaders/vert.glsl");
-    const std::string basicFragmentShaderSource = readFile("../Shaders/frag.glsl");
 
-    if (!shader_utils.registerShader(ShaderUtils::Type::VERTEX_SHADER_TYPE, basicVertexShaderSource.c_str()))
-    {
-        error("failed to register the vertex shader...");
-        return false;
-    }
-
-    if (!shader_utils.registerShader(ShaderUtils::Type::FRAGMENT_SHADER_TYPE, basicFragmentShaderSource.c_str()))
-    {
-        error("failed to register the fragment shader...");
-        return false;
-    }
-
-    if (!shader_utils.registerProgram(erase_if_program_registered))
-    {
-        error("failed to register the program...");
-        return false;
-    }
-    return true;
-}
 
 
 void drawAxes() {

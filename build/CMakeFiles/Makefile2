@@ -96,12 +96,12 @@ src/clean: src/CMakeFiles/fick.dir/clean
 src/CMakeFiles/fick.dir/all:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/fick.dir/build.make src/CMakeFiles/fick.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/fick.dir/build.make src/CMakeFiles/fick.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/eddiephillips/Downloads/Graph/build/CMakeFiles --progress-num=1,2,3,4 "Built target fick"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/eddiephillips/Downloads/Graph/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target fick"
 .PHONY : src/CMakeFiles/fick.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/fick.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/eddiephillips/Downloads/Graph/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/eddiephillips/Downloads/Graph/build/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/fick.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/eddiephillips/Downloads/Graph/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/fick.dir/rule

@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/fick.dir/math_utils.cpp.o.d"
   "CMakeFiles/fick.dir/shader_utils.cpp.o"
   "CMakeFiles/fick.dir/shader_utils.cpp.o.d"
+  "CMakeFiles/fick.dir/utils.cpp.o"
+  "CMakeFiles/fick.dir/utils.cpp.o.d"
   "fick"
   "fick.pdb"
 )

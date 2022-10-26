@@ -202,6 +202,30 @@ shader_utils.cpp.s:
 	cd /Users/eddiephillips/Downloads/Graph/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/fick.dir/build.make src/CMakeFiles/fick.dir/shader_utils.cpp.s
 .PHONY : shader_utils.cpp.s
 
+utils.o: utils.cpp.o
+.PHONY : utils.o
+
+# target to build an object file
+utils.cpp.o:
+	cd /Users/eddiephillips/Downloads/Graph/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/fick.dir/build.make src/CMakeFiles/fick.dir/utils.cpp.o
+.PHONY : utils.cpp.o
+
+utils.i: utils.cpp.i
+.PHONY : utils.i
+
+# target to preprocess a source file
+utils.cpp.i:
+	cd /Users/eddiephillips/Downloads/Graph/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/fick.dir/build.make src/CMakeFiles/fick.dir/utils.cpp.i
+.PHONY : utils.cpp.i
+
+utils.s: utils.cpp.s
+.PHONY : utils.s
+
+# target to generate assembly for a file
+utils.cpp.s:
+	cd /Users/eddiephillips/Downloads/Graph/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/fick.dir/build.make src/CMakeFiles/fick.dir/utils.cpp.s
+.PHONY : utils.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -220,6 +244,9 @@ help:
 	@echo "... shader_utils.o"
 	@echo "... shader_utils.i"
 	@echo "... shader_utils.s"
+	@echo "... utils.o"
+	@echo "... utils.i"
+	@echo "... utils.s"
 .PHONY : help
 
 

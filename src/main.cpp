@@ -8,25 +8,24 @@
 // #include <GL/glut.h>
 #endif
 
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <cmath>
+
+
 #include "logs.h"
 #include "shader_utils.h"
 #include "math_utils.h"
-#include <iostream>
-#include <fstream>
+
+
 
 const size_t WIDTH = 640;
 const size_t HEIGHT = 480;
 const char *WINDOW_NAME = "OpenGL Explorer";
 auto shader_utils = ShaderUtils::Program{};
 
-/*
- * Callback to handle the "close window" event, once the user pressed the Escape key.
- */
-static void quitCallback(GLFWwindow *window, int key, int scancode, int action, int _mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
 
 /**
  * @brief Load the shaders, in order to display the result
@@ -68,8 +67,6 @@ GLFWwindow *initializeWindow()
         error("window creation failed");
         return NULL;
     }
-    // Close the window as soon as the Escape key has been pressed
-    glfwSetKeyCallback(window, quitCallback);
     // Easy reload
     glfwSetKeyCallback(window, reloadShaders);
     // Makes the window context current
@@ -87,27 +84,41 @@ GLFWwindow *initializeWindow()
  * @param path The path of the file
  * @return The content of the file, as a string (read all file)
  */
-inline auto readFile(const std::string_view path) -> const std::string
+inline std::string readFile(const char* filePath) 
 {
-    // Avoid dynamic allocation: read the 4096 first bytes
-    constexpr auto read_size = std::size_t(4096);
-    auto stream = std::ifstream(path.data());
-    stream.exceptions(std::ios_base::badbit);
-
-    auto out = std::string();
-    auto buf = std::string(read_size, '\0');
-    while (stream.read(&buf[0], read_size))
-    {
-        out.append(buf, 0, stream.gcount());
-    }
-    out.append(buf, 0, stream.gcount());
-    return out;
+	std::string content;
+	std::ifstream fileStream(filePath, std::ios::in);
+	std::string line = "";
+	while(!fileStream.eof())
+	{
+		getline(fileStream, line);
+		content.append(line + "\n");
+	}
+	fileStream.close();
+	return content;
 }
 
 const bool loadShaderProgram(const bool erase_if_program_registered = true)
 {
     const std::string basicVertexShaderSource = readFile("../Shaders/vert.glsl");
     const std::string basicFragmentShaderSource = readFile("../Shaders/frag.glsl");
+    // const char *basicVertexShaderSource = "#version 410 core\n"
+    //                                     "layout (location = 0) in vec3 vertexPosition;\n"
+    //                                     "layout (location = 1) in vec3 vertexColor;\n"
+    //                                     "layout (location = 0) out vec3 fragmentColor;\n"
+    //                                     "void main()\n"
+    //                                     "{\n"
+    //                                     "    gl_Position = vec4(vertexPosition, 1.0);\n"
+    //                                     "    fragmentColor = vertexColor;\n"
+    //                                     "}\0";
+
+    // const char *basicFragmentShaderSource = "#version 410 core\n"
+    //                                         "layout (location = 0) in vec3 fragmentColor;\n"
+    //                                         "out vec4 finalColor;\n"
+    //                                         "void main()\n"
+    //                                         "{\n"
+    //                                         "    finalColor = vec4(fragmentColor, 1.0);\n"
+    //                                         "}\0";
 
     if (!shader_utils.registerShader(ShaderUtils::Type::VERTEX_SHADER_TYPE, basicVertexShaderSource.c_str()))
     {

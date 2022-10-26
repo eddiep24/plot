@@ -2,10 +2,14 @@
 /* Defined before OpenGL and GLUT includes to avoid deprecation messages */
 #define GL_SILENCE_DEPRECATION
 #define GLFW_INCLUDE_GLCOREARB
+#define __gl_h_
+#define GL_DO_NOT_WARN_IF_MULTI_GL_VERSION_HEADERS_INCLUDED
+
 #include <GLFW/glfw3.h>
-// #else
-//  #include <GL/gl.h>
-// #include <GL/glut.h>
+#include </opt/homebrew/include/GL/glut.h>
+#include </opt/homebrew/include/GL/gl.h>
+
+
 #endif
 
 #include <iostream>
@@ -15,15 +19,16 @@
 #include <cmath>
 
 
+
 #include "logs.h"
 #include "shader_utils.h"
 #include "math_utils.h"
 
 
 
-const size_t WIDTH = 640;
-const size_t HEIGHT = 480;
-const char *WINDOW_NAME = "OpenGL Explorer";
+const size_t WIDTH = 500;
+const size_t HEIGHT = 500;
+const char *WINDOW_NAME = "Fick's Law";
 auto shader_utils = ShaderUtils::Program{};
 
 
@@ -102,23 +107,6 @@ const bool loadShaderProgram(const bool erase_if_program_registered = true)
 {
     const std::string basicVertexShaderSource = readFile("../Shaders/vert.glsl");
     const std::string basicFragmentShaderSource = readFile("../Shaders/frag.glsl");
-    // const char *basicVertexShaderSource = "#version 410 core\n"
-    //                                     "layout (location = 0) in vec3 vertexPosition;\n"
-    //                                     "layout (location = 1) in vec3 vertexColor;\n"
-    //                                     "layout (location = 0) out vec3 fragmentColor;\n"
-    //                                     "void main()\n"
-    //                                     "{\n"
-    //                                     "    gl_Position = vec4(vertexPosition, 1.0);\n"
-    //                                     "    fragmentColor = vertexColor;\n"
-    //                                     "}\0";
-
-    // const char *basicFragmentShaderSource = "#version 410 core\n"
-    //                                         "layout (location = 0) in vec3 fragmentColor;\n"
-    //                                         "out vec4 finalColor;\n"
-    //                                         "void main()\n"
-    //                                         "{\n"
-    //                                         "    finalColor = vec4(fragmentColor, 1.0);\n"
-    //                                         "}\0";
 
     if (!shader_utils.registerShader(ShaderUtils::Type::VERTEX_SHADER_TYPE, basicVertexShaderSource.c_str()))
     {
@@ -139,6 +127,17 @@ const bool loadShaderProgram(const bool erase_if_program_registered = true)
     }
     return true;
 }
+
+
+void drawAxes() {
+    
+}
+
+void drawSquares() {
+
+
+}
+
 
 int main(void)
 {
@@ -169,62 +168,36 @@ int main(void)
         glfwTerminate();
         return -1;
     }
-    /* END OF SHADER PART */
 
-    /* DRAW THE TRIANGLE */
-    const MathUtils::vertex vertices[3] = {
-        {0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f},
-        {0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f},
-        {-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f}};
+    float pos[] {
+        -.5f, -.5f,
+        0.0f, 0.5f,
+        0.5f, -.5f
+    };
 
-    // Vertex Buffer Object = VBO
     GLuint VBO = {};
     glGenBuffers(1, &VBO);
 
-    // Something failed when generating buffers
-    if (glGetError() != GL_NO_ERROR)
-    {
-        error("error when generating buffers");
-        glDeleteBuffers(1, &VBO); // TODO: Needed?
-        glfwTerminate();
-        return -1;
-    }
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, MathUtils::getNbElements(vertices) * sizeof(float), vertices, GL_STATIC_DRAW | GL_MAP_READ_BIT);
-
-    // Vertex Arrays Object = VAO
-    GLuint VAO = {};
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-
-    // Specify position attribute -> 0 as offset
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, MathUtils::VERTEX_ELEMENTS_NB * sizeof(float), (GLvoid *)0);
-    glEnableVertexAttribArray(0);
-
-    // Specify color attribute -> 3 as offset
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, MathUtils::VERTEX_ELEMENTS_NB * sizeof(float), (GLvoid *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    /* END OF DRAWING */
+    
 
     while (!glfwWindowShouldClose(window))
     {
         // Render
-        glClearColor(0.5, 0.5, 0.5, 1.0);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glUseProgram(shader_utils.getProgram().value());
-        glBindVertexArray(VAO);
+        glClearColor(0, 0, 0, 1.0); // Set background color
+
+        glClear(GL_COLOR_BUFFER_BIT); 
+        // glUseProgram(shader_utils.getProgram().value());
+        // glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
-        // Poll for and process events
+        
+
+        // Listen for events
         glfwPollEvents();
         // Swap front and back buffers
         glfwSwapBuffers(window);
     }
 
-    // ... here, the user closed the window
     glDeleteBuffers(1, &VBO);
-    glDeleteVertexArrays(1, &VAO);
     glfwTerminate();
     return 0;
 }

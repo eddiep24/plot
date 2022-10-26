@@ -244,15 +244,6 @@ fickMain_IS_TOP_LEVEL:STATIC=ON
 fickMain_SOURCE_DIR:STATIC=/Users/eddiephillips/Downloads/Graph
 
 //Value Computed by CMake
-fickSource_BINARY_DIR:STATIC=/Users/eddiephillips/Downloads/Graph/build/src
-
-//Value Computed by CMake
-fickSource_IS_TOP_LEVEL:STATIC=OFF
-
-//Value Computed by CMake
-fickSource_SOURCE_DIR:STATIC=/Users/eddiephillips/Downloads/Graph/src
-
-//Value Computed by CMake
 fick_BINARY_DIR:STATIC=/Users/eddiephillips/Downloads/Graph/build/src
 
 //Value Computed by CMake
